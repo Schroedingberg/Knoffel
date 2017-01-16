@@ -18,30 +18,38 @@ class dice:
 
 
 class ScoreCard:
-    # Functions returning functions that compute a score for a figure
+    # Helper function to return function for computation of first 6 figures
     ns = lambda x: sum(filter(lambda y: y == x, x))
-    ntuple = lambda x: sum(x)
-    fullhouse = lambda x: 25
-    smallstraight = lambda x: 30
-    largestraight = lambda x: 40
-    knoffel = lambda x: 50
-    chance = lambda x: sum(x)
 
     def __init__(self):
-        """Initialize object with a dictionary of figure-names, associated with default values of -1"""
-        self.figures = {"1s": (ns(1), "1{0,5}"),
-                        "2s": (ns(2), "2{0,5}"),
-                        "3s": (ns(3) "3{0,5}"),
-                        "4s": (ns(4) "4{0,5}"),
-                        "5s": (ns(5) "5{0,5}"),
-                        "6s": (ns(6) "6{0,5}"),
-                        "3Tuple": (ntuple "*"),
-                        "4Tuple": (ntuple "*"),
-                        "FullHouse": (fullhouse "*"),
-                        "SmallStraight": (smallstraight "*"),
-                        "LargeStraight": (largestraight "*"),
-                        "Knoffel": (knoffel "*"),
-                        "Chance": (chance "*")}
+        """Initialize object with a dictionary of figure-names, associated
+        with default values of -1 and the rules for the scoring of the figures."""
+        self.figures = {"1s":
+                        ns(1),
+                        "2s":
+                        ns(2),
+                        "3s":
+                        ns(3),
+                        "4s":
+                        ns(4),
+                        "5s":
+                        ns(5),
+                        "6s":
+                        ns(6),
+                        "3Tuple":
+                        lambda x: sum(x),
+                        "4Tuple":
+                        lambda x: sum(x),
+                        "FullHouse":
+                        lambda x: 25,
+                        "SmallStraight":
+                        lambda x: 30,
+                        "LargeStraight":
+                        lambda x: 40,
+                        "Knoffel":
+                        lambda x: 50,
+                        "Chance":
+                        lambda x: sum(x)}
 
         self.card = dict.fromkeys(self.figures.keys(), -1)
 
@@ -54,7 +62,7 @@ class ScoreCard:
         if category in self.card.keys():
             if self.card[category] == -1:
                 return True
-            elif category not "Chance":
+            elif category != "Chance":
                 print("Figure already played")
                 return False
         else:
@@ -62,6 +70,7 @@ class ScoreCard:
             return False
 
     def is_valid_toss(self, category, toss):
+
         return False
 
     def get_score_for_curr_toss(self, category, toss):
