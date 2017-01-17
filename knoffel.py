@@ -92,14 +92,40 @@ class ScoreCard:
             return False
 
     def get_score_for_curr_toss(self, category, toss):
-        return False
+        if self.is_valid_toss(category, toss):
+            return self.figures[category](toss)
+        else:
+            return self.is_valid_toss(category, toss)
 
     def __setitem__(self, category, toss):
-        if is_valid_category(category):
+        if self.is_valid_category(category):
             self.card[category] = toss
 
     def get_final_score(self):
         return sum(self.card.values())
+
+
+class Player:
+
+    def __init__(self):
+        self.dices = [dice() for i in range(5)]
+        self.card = ScoreCard()
+
+    def __str__(self):
+        print("Dices are:")
+        print(" ".join(self.dices))
+
+    def sort_dice(self):
+        self.dices.sort()
+
+    def toss_dice(self):
+        for d in self.dices:
+            d.roll_dice()
+        self.sort_dice(self)
+
+    def toss_dice_again(self, dice_indices):
+        for i in dice_indices:
+            self.dices[i].roll_dice()
 
 
 d = dice()
